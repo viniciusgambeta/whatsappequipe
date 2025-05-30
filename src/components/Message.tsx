@@ -45,7 +45,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
               src={image} 
               alt="Message attachment" 
               className="max-w-full rounded-md"
-              style={{ maxHeight: '330px' }}
+              style={{ maxHeight: '200px', objectFit: 'cover' }}
             />
           </div>
         )}
