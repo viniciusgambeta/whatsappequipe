@@ -36,7 +36,7 @@ const WhatsAppChat: React.FC = () => {
     {
       id: 5,
       sender: "Rita",
-      image: "https://images.pexels.com/photos/406014/pexels-photo-406014.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&dpr=1",
+      image: "https://images.pexels.com/photos/406014/pexels-photo-406014.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=1",
       time: "08:47 am",
       isOutgoing: false
     }
