@@ -1,13 +1,255 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsApp Chat Interface Implementation</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            background-color: rgb(243 244 246);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 28rem;
+            height: 600px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .chat-header {
+            background-color: #008069;
+            color: white;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+
+        .back-arrow {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .back-number {
+            font-size: 1.25rem;
+            margin-left: 0.25rem;
+        }
+
+        .profile-image {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            object-fit: cover;
+            margin-left: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .header-info {
+            margin-left: 0.75rem;
+            flex: 1;
+        }
+
+        .header-title {
+            font-weight: 500;
+        }
+
+        .header-subtitle {
+            font-size: 0.8125rem;
+            color: rgb(243 244 246);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-body {
+            flex: 1;
+            background-color: #E5DDD5;
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+            background-size: 210px auto;
+            overflow-y: auto;
+            padding: 0.75rem;
+        }
+
+        .message-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.5rem;
+            border-radius: 7.5px;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            position: relative;
+        }
+
+        .message.outgoing {
+            background-color: #DCF8C6;
+            align-self: flex-end;
+        }
+
+        .message.incoming {
+            background-color: white;
+            align-self: flex-start;
+        }
+
+        .sender {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .sender.digao { color: #00BCD4; }
+        .sender.joelma { color: #FF5722; }
+        .sender.rita { color: #9C27B0; }
+
+        .message-text {
+            font-size: 0.875rem;
+            color: rgb(31 41 55);
+        }
+
+        .message-image {
+            max-width: 100%;
+            border-radius: 0.375rem;
+            max-height: 150px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .message-meta {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 0.25rem;
+            gap: 0.25rem;
+        }
+
+        .message-time {
+            font-size: 0.6875rem;
+            color: rgb(107 114 128);
+        }
+
+        .message-status {
+            display: flex;
+            margin-right: -0.25rem;
+        }
+
+        .status-check {
+            color: #53bdeb;
+            width: 14px;
+            height: 14px;
+            margin-right: -0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="header-left">
+                <div class="back-button">
+                    <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    <span class="back-number">117</span>
+                </div>
+                <img class="profile-image" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Profile">
+                <div class="header-info">
+                    <div class="header-title">Equipe d Bolso</div>
+                    <div class="header-subtitle">5 Online</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m22 2-7 20-4-9-9-4Z"></path>
+                    <path d="M22 2 11 13"></path>
+                </svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+            </div>
+        </div>
+        <div class="chat-body">
+            <div class="message-container">
+                <div class="message outgoing">
+                    <div class="message-text">Gente, vocês viram?!?!</div>
+                    <div class="message-meta">
+                        <span class="message-time">08:42 am</span>
+                        <div class="message-status">
+                            <svg class="status-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <svg class="status-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="message outgoing">
+                    <div class="message-text">[Fulano] confirmou presença no aulão do dia 10!!!😍😍😍</div>
+                    <div class="message-meta">
+                        <span class="message-time">08:42 am</span>
+                        <div class="message-status">
+                            <svg class="status-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <svg class="status-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="message incoming">
+                    <div class="sender digao">Digão</div>
+                    <div class="message-text">Mds, sério?!</div>
+                    <div class="message-meta">
+                        <span class="message-time">08:44 am</span>
+                    </div>
+                </div>
+                <div class="message incoming">
+                    <div class="sender joelma">Joelma</div>
+                    <div class="message-text">Só acredito vendo</div>
+                    <div class="message-meta">
+                        <span class="message-time">08:45 am</span>
+                    </div>
+                </div>
+                <div class="message incoming">
+                    <div class="sender rita">Rita</div>
+                    <img class="message-image" src="https://images.pexels.com/photos/406014/pexels-photo-406014.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&dpr=1" alt="Message attachment">
+                    <div class="message-meta">
+                        <span class="message-time">08:47 am</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
